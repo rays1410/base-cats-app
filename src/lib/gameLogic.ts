@@ -1,5 +1,6 @@
 import { KittenStats, KittenState, CooldownInfo } from '@/types/game';
 import { GAME_CONFIG } from './constants';
+import { generateKittenTraits } from './traits';
 
 export function createNewKitten(): KittenStats {
   const now = Date.now();
@@ -10,6 +11,7 @@ export function createNewKitten(): KittenStats {
     lastPlayed: now,
     lastUpdate: now,
     createdAt: now,
+    traits: generateKittenTraits(),
   };
 }
 

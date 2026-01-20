@@ -5,12 +5,27 @@ import { useGameState } from '@/hooks/useGameState';
 import { PixelKitten } from './PixelKitten';
 import { StatusBar } from './StatusBar';
 import { ActionButton } from './ActionButton';
+import { TraitsPanel } from './TraitsPanel';
 import {
   determineKittenState,
   getCooldownInfo,
   formatCooldown,
   getKittenAge,
 } from '@/lib/gameLogic';
+import { KittenTraits } from '@/types/game';
+
+// Default traits for the adoption screen preview
+const PREVIEW_TRAITS: KittenTraits = {
+  bodyColor: { name: 'Orange Tabby', hex: '#D97706', rarity: 'common' },
+  headColor: { name: 'Orange Tabby', hex: '#D97706', rarity: 'common' },
+  tailColor: { name: 'Orange Tabby', hex: '#D97706', rarity: 'common' },
+  earColor: { name: 'Orange Tabby', hex: '#D97706', rarity: 'common' },
+  pawColor: { name: 'Orange Tabby', hex: '#D97706', rarity: 'common' },
+  eyeColor: { name: 'Green', hex: '#22C55E', rarity: 'common' },
+  noseColor: { name: 'Pink', hex: '#F472B6', rarity: 'common' },
+  pattern: { name: 'Solid', hex: '#000000', rarity: 'common' },
+  overallRarity: 'common',
+};
 
 export function GameUI() {
   const { kitten, isInitialized, adoptKitten, feed, play, resetGame } = useGameState();
@@ -50,7 +65,7 @@ export function GameUI() {
             Adopt your virtual kitten and take care of it! Feed it, play with it, and watch it grow happy.
           </p>
           <div className="mb-8">
-            <PixelKitten state="happy" className="mx-auto scale-150" />
+            <PixelKitten state="happy" traits={PREVIEW_TRAITS} className="mx-auto scale-150" />
           </div>
           <button
             onClick={adoptKitten}
@@ -96,8 +111,13 @@ export function GameUI() {
 
         {/* Kitten */}
         <div className="w-48 h-48 flex items-center justify-center">
-          <PixelKitten state={kittenState} className="scale-150" />
+          <PixelKitten state={kittenState} traits={kitten.traits} className="scale-150" />
         </div>
+      </div>
+
+      {/* Traits Panel */}
+      <div className="w-full max-w-md mb-6">
+        <TraitsPanel traits={kitten.traits} />
       </div>
 
       {/* Status Bars */}
